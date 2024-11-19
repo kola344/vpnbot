@@ -19,13 +19,13 @@ async def start(message: Message):
     if st1 and st2:
         if message.chat.id in dynamic.users_data:
             await message.answer(
-                f"➡️ У вас уже есть соединение VPN, данные для подключения:\n\n```{dynamic.users_data[message.chat.id]['vpn_string']}```",
+                f"➡️ У вас уже есть соединение VPN, данные для подключения:\n\n```{dynamic.users_data[message.chat.id]['vpn_string']}```\n\n❕Подключение сбрасывается раз в сутки!",
                 parse_mode="Markdown")
         else:
             vpn_string = add_client.connect(str(message.chat.id))
             dynamic.users_data[message.chat.id] = {'vpn_string': vpn_string}
             await message.answer(
-                f"✔️ Вы успешно создали соединение VPN, данные для подключения:\n\n```{vpn_string}```",
+                f"✔️ Вы успешно создали соединение VPN, данные для подключения:\n\n```{vpn_string}```\n\n❕Подключение сбрасывается раз в сутки!",
                 parse_mode="Markdown")
     else:
         try:
