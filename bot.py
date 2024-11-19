@@ -15,22 +15,19 @@ async def start(message: Message):
         config.last_client_update = time.time()
         del_client.del_all_clients()
     await message.answer("Инструкция по подключению:\ntelegra.ph")
-    await message.answer("Чтобы получить данные для подключения, введите email")
-
-@router.message(F.text)
-async def vpn_connect(message: Message):
-    if time.time() - config.last_client_update >= 3600 * 24:
-        config.last_client_update = time.time()
-        del_client.del_all_clients()
     st1, st2 = await check_user(message.chat.id)
     if st1 and st2:
         if message.chat.id in dynamic.users_data:
-            await message.answer(f"➡️ У вас уже есть соединение VPN, данные для подключения:\n\n```{dynamic.users_data[message.chat.id]['vpn_string']}```", parse_mode="Markdown")
+            await message.answer(
+                f"➡️ У вас уже есть соединение VPN, данные для подключения:\n\n```{dynamic.users_data[message.chat.id]['vpn_string']}```",
+                parse_mode="Markdown")
         else:
             if '@' in message.text:
-                vpn_string = add_client.connect(message.text)
+                vpn_string = add_client.connect(str(message.chat.id))
                 dynamic.users_data[message.chat.id] = {'vpn_string': vpn_string}
-                await message.answer(f"✔️ Вы успешно создали соединение VPN, данные для подключения:\n\n```{vpn_string}```", parse_mode="Markdown")
+                await message.answer(
+                    f"✔️ Вы успешно создали соединение VPN, данные для подключения:\n\n```{vpn_string}```",
+                    parse_mode="Markdown")
             else:
                 await message.answer("⚠️ Неверный формат email")
     else:
@@ -49,6 +46,14 @@ async def vpn_connect(message: Message):
         markup = InlineKeyboardMarkup(inline_keyboard=keyboard)
         await message.answer("Вы не подписаны на каналы", reply_markup=markup)
 
+@router.message(F.text)
+async def vpn_connect(message: Message):
+    if time.time() - config.last_client_update >= 3600 * 24:
+        config.last_client_update = time.time()
+        del_client.del_all_clients()
+    await message.answer("Инструкция по подключению:\ntelegra.ph")
+    await message.answer("Для получения ВПН введите /start")
+
 @router.callback_query(F.data == 'check_user')
 async def check_user_callback(call):
     if time.time() - config.last_client_update >= 3600 * 24:
@@ -59,7 +64,7 @@ async def check_user_callback(call):
     print(st1, st2)
     if st1 and st2:
         await call.message.answer("Инструкция по подключению:\ntelegra.ph")
-        await call.message.answer("Чтобы получить данные для подключения, введите email")
+        await call.message.answer("Чтобы получить данные для подключения, введите /start")
     else:
         try:
             del_client.delete_client(dynamic.users_data[call.message.chat.id]["vpn_string"])
