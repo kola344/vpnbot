@@ -22,14 +22,11 @@ async def start(message: Message):
                 f"➡️ У вас уже есть соединение VPN, данные для подключения:\n\n```{dynamic.users_data[message.chat.id]['vpn_string']}```",
                 parse_mode="Markdown")
         else:
-            if '@' in message.text:
-                vpn_string = add_client.connect(str(message.chat.id))
-                dynamic.users_data[message.chat.id] = {'vpn_string': vpn_string}
-                await message.answer(
-                    f"✔️ Вы успешно создали соединение VPN, данные для подключения:\n\n```{vpn_string}```",
-                    parse_mode="Markdown")
-            else:
-                await message.answer("⚠️ Неверный формат email")
+            vpn_string = add_client.connect(str(message.chat.id))
+            dynamic.users_data[message.chat.id] = {'vpn_string': vpn_string}
+            await message.answer(
+                f"✔️ Вы успешно создали соединение VPN, данные для подключения:\n\n```{vpn_string}```",
+                parse_mode="Markdown")
     else:
         try:
             del_client.delete_client(dynamic.users_data[message.chat.id]["vpn_string"])
