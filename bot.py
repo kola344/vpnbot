@@ -44,7 +44,7 @@ async def vpn_connect(message: Message):
         if not st1:
             keyboard.append([InlineKeyboardButton(text='ЧЗХ', url='https://t.me/+XPI7y5G08bZkNzdi')])
         if not st2:
-            keyboard.append([InlineKeyboardButton(text="Промокодочная", url='https://t.me/+rJyP4zXtgMFlYzA6')])
+            keyboard.append([InlineKeyboardButton(text="Промокодочная", url='https://t.me/+5U2hmZ3VonI5ZWEy')])
         keyboard.append([InlineKeyboardButton(text='☑️ Проверить', callback_data='check_user')])
         markup = InlineKeyboardMarkup(inline_keyboard=keyboard)
         await message.answer("Вы не подписаны на каналы", reply_markup=markup)
