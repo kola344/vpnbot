@@ -99,7 +99,7 @@ def del_all_clients():
 
         if clients:
             for client in clients:
-                if client["email"] != "TesTingClllll123ent@gm.com":
+                if client["email"] != "TesTingClllll123ent@gm.com" and client["email"] != "TesTingClllll123ent@gmail.com":
                     x3_instance.delete_client_from_inbound(inbound_id, client["id"])
 
 
