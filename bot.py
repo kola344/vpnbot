@@ -16,7 +16,7 @@ async def start(message: Message):
     if time.time() - config.last_client_update >= (3600 * 24 * 7) - (time.time() % (3600 * 24)):
         config.last_client_update = time.time()
         del_client.del_all_clients()
-    await message.bot.copy_message(message.chat.id, 53228959, 201)
+    await message.bot.copy_message(message.chat.id, 53228959, 425)
     await message.bot.copy_message(message.chat.id, 53228959, 193)
     await message.bot.copy_message(message.chat.id, 53228959, 197)
     st1, st2 = await check_user(message.chat.id)
@@ -52,7 +52,7 @@ async def vpn_connect(message: Message):
     if time.time() - config.last_client_update >= (3600 * 24 * 7) - (time.time() % (3600 * 24)):
         config.last_client_update = time.time()
         del_client.del_all_clients()
-    await message.bot.copy_message(message.chat.id, 53228959, 201)
+    await message.bot.copy_message(message.chat.id, 53228959, 425)
     await message.bot.copy_message(message.chat.id, 53228959, 193)
     await message.bot.copy_message(message.chat.id, 53228959, 197)
     await message.answer("Для получения ВПН введите /start")
@@ -66,7 +66,7 @@ async def check_user_callback(call):
     st1, st2 = await check_user(call.message.chat.id)
     print(st1, st2)
     if st1 and st2:
-        await call.message.bot.copy_message(call.message.chat.id, 53228959, 201)
+        await call.message.bot.copy_message(call.message.chat.id, 53228959, 425)
         await call.message.bot.copy_message(call.message.chat.id, 53228959, 193)
         await call.message.bot.copy_message(call.message.chat.id, 53228959, 197)
         await call.message.answer("Чтобы получить данные для подключения, введите /start")
