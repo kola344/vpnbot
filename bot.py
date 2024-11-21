@@ -56,7 +56,6 @@ async def vpn_connect(message: Message):
     await message.bot.copy_message(message.chat.id, 53228959, 193)
     await message.bot.copy_message(message.chat.id, 53228959, 197)
     await message.answer("Для получения ВПН введите /start")
-    await message.answer(f"message.id: {message.message_id}")
 
 @router.callback_query(F.data == 'check_user')
 async def check_user_callback(call):
