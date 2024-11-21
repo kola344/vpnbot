@@ -9,23 +9,25 @@ import time
 
 router = Router()
 
+#53228959
+
 @router.message(F.text == '/start')
 async def start(message: Message):
     if time.time() - config.last_client_update >= 3600 * 24:
         config.last_client_update = time.time()
         del_client.del_all_clients()
-    await message.answer("Инструкция по подключению:\ntelegra.ph")
+    await message.bot.copy_message(message.chat.id, 53228959, 171)
     st1, st2 = await check_user(message.chat.id)
     if st1 and st2:
         if message.chat.id in dynamic.users_data:
             await message.answer(
-                f"➡️ У вас уже есть соединение VPN, данные для подключения:\n\n```{dynamic.users_data[message.chat.id]['vpn_string']}```\n\n❕Подключение сбрасывается раз в сутки!",
+                f"➡️ У вас уже есть соединение VPN, данные для подключения:\n\n```{dynamic.users_data[message.chat.id]['vpn_string']}```\n\n❕Подключение сбрасывается раз в неделю!",
                 parse_mode="Markdown")
         else:
             vpn_string = add_client.connect(str(message.chat.id))
             dynamic.users_data[message.chat.id] = {'vpn_string': vpn_string}
             await message.answer(
-                f"✔️ Вы успешно создали соединение VPN, данные для подключения:\n\n```{vpn_string}```\n\n❕Подключение сбрасывается раз в сутки!",
+                f"✔️ Вы успешно создали соединение VPN, данные для подключения:\n\n```{vpn_string}```\n\n❕Подключение сбрасывается раз в неделю!",
                 parse_mode="Markdown")
     else:
         try:
@@ -43,12 +45,12 @@ async def start(message: Message):
         markup = InlineKeyboardMarkup(inline_keyboard=keyboard)
         await message.answer("Вы не подписаны на каналы", reply_markup=markup)
 
-@router.message(F.text)
+@router.message()
 async def vpn_connect(message: Message):
     if time.time() - config.last_client_update >= 3600 * 24:
         config.last_client_update = time.time()
         del_client.del_all_clients()
-    await message.answer("Инструкция по подключению:\ntelegra.ph")
+    await message.bot.copy_message(message.chat.id, 53228959, 171)
     await message.answer("Для получения ВПН введите /start")
 
 @router.callback_query(F.data == 'check_user')
@@ -60,7 +62,7 @@ async def check_user_callback(call):
     st1, st2 = await check_user(call.message.chat.id)
     print(st1, st2)
     if st1 and st2:
-        await call.message.answer("Инструкция по подключению:\ntelegra.ph")
+        await message.bot.copy_message(message.chat.id, 53228959, 171)
         await call.message.answer("Чтобы получить данные для подключения, введите /start")
     else:
         try:
