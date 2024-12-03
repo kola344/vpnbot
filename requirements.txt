@@ -3,3 +3,4 @@ fastapi
 uvicorn
 outline-vpn-api
 python-decouple
+bs4
